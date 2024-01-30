@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <title>FindPartner</title>
+</head>
+ 
+<body>
+
+
+    <header>
+        <h1>GHS</h1>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>&nbsp;
+        <a href="partners.html">Partners</a> &nbsp;
+        <a href="findPartners.html">Find Partners</a>
+    </nav>
+
+    <main>
+        
+        <section id="profile">
+            <div id="partnerFind">
+                <h2>Partner Search</h2>
+                <div class="labels">
+                    <label for="vGrade">Select Grade</label>
+                    <select name="vGrade" id="vGrade">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    &nbsp;
+
+                    <label for="vType">Project Type</label>
+                    <select name="vType" id="vType" class="vtype">
+                        <option value="1">1st Type</option>
+                        <option value="2">2nd Type</option>
+                        <option value="3">3rd Type</option>
+                    </select>
+                    <br>
+
+                    <h2>Services Offered:</h2>
+
+                    <label class="container">FieldTrip
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="container">Scholarships
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="container">Email/Newsletter
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="container">Lesson Plans
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                    <br>
+                    <button type="button" onclick="showPossiblePartners()">SUBMIT</button>
+
+                </div>
+        </section>
+
+        <section id="partnerResults">
+            <h2>Possible Partners</h2>
+            <table id="partnersTable">
+                <!--Table -->
+            </table>
+        </section>
+
+    </main>
+
+    <footer>
+        <h1>GHS</h1>
+    </footer>
+
+    <script>
+        function showPossiblePartners() {
+            const selectedGrade = document.getElementById("vGrade").value;
+            const selectedType = document.getElementById("vType").value;
+            const fieldTripChecked = document.getElementById("fieldTrip").checked;
+            const scholarshipsChecked = document.getElementById("scholarships").checked;
+            const emailNewsletterChecked = document.getElementById("emailNewsletter").checked;
+            const lessonPlansChecked = document.getElementById("lessonPlans").checked;
+
+            const partnerData = generatePartnerData(selectedGrade, selectedType, fieldTripChecked, scholarshipsChecked, emailNewsletterChecked, lessonPlansChecked);
+            /*const partnerData = [
+                { name: "Partner 1", contact: "Contact 1", webpage: "Webpage 1" },
+                { name: "Partner 2", contact: "Contact 2", webpage: "Webpage 2" },
+                { name: "Partner 3", contact: "Contact 3", webpage: "Webpage 3" }
+            ];
+            */
+
+            const table = document.getElementById("partnersTable");
+            table.innerHTML = "";
+
+            const headerRow = table.insertRow(0);
+            const nameHeader = headerRow.insertCell(0);
+            const contactHeader = headerRow.insertCell(1);
+            const webpageHeader = headerRow.insertCell(2);
+            nameHeader.innerHTML = "<b>Name</b>";
+            contactHeader.innerHTML = "<b>Contact</b>";
+            webpageHeader.innerHTML = "<b>Webpage</b>";
+
+
+            for (let i = 0; i < partnerData.length; i++) {
+                const partner = partnerData[i];
+                const row = table.insertRow(i + 1);
+                const nameCell = row.insertCell(0);
+                const contactCell = row.insertCell(1);
+                const webpageCell = row.insertCell(2);
+
+                nameCell.innerHTML = partner.name;
+                contactCell.innerHTML = partner.contact;
+                webpageCell.innerHTML = `<a href='partners.html' target="_blank">${partner.webpage}</a>`;
+            }
+
+            const resultsSection = document.getElementById("partnerResults");
+
+            resultsSection.style.display = "list";
+
+        }
+
+
+        function generatePartnerData(selectedGrade, selectedType) {
+            
+            const partnerData = [
+                { name: `Partner ${selectedGrade}-${selectedType}-1`, contact: "Contact 1", webpage: "Webpage 1" },
+                { name: `Partner ${selectedGrade}-${selectedType}-2`, contact: "Contact 2", webpage: "Webpage 2" },
+                { name: `Partner ${selectedGrade}-${selectedType}-3`, contact: "Contact 3", webpage: "Webpage 3" }
+            ];
+            // if (fieldTripChecked) {
+            //     partnerData.forEach(partner => {
+            //         partner.services = partner.services || [];
+            //         partner.services.push("FieldTrip");
+            //     });
+            // }
+            // if (scholarshipsChecked) {
+            //     partnerData.forEach(partner => {
+            //         partner.services = partner.services || [];
+            //         partner.services.push("Scholarships");
+            //     });
+            // }
+            // if (emailNewsletterChecked) {
+            //     partnerData.forEach(partner => {
+            //         partner.services = partner.services || [];
+            //         partner.services.push("Email/Newsletter");
+            //     });
+            // }
+            // if (lessonPlansChecked) {
+            //     partnerData.forEach(partner => {
+            //         partner.services = partner.services || [];
+            //         partner.services.push("Lesson Plans");
+            //     });
+            // }
+            return partnerData;
+        }
+
+
+    </script>
+
+</body>
+
+</html>
